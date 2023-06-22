@@ -5,3 +5,5 @@ obj
 .db
 .sql
 .env
+# automatically generated vim tags file
+tags
