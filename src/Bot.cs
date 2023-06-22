@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-
 using FrankieBot.Discord.Modules;
 using FrankieBot.Discord.Services;
 
