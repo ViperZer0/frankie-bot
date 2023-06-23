@@ -45,6 +45,8 @@ namespace FrankieBot.Discord.Services
 
         public event Func<SocketMessage, Task> MessageReceived;
 
+        public event Func<LogMessage, Task> Log;
+
         private async Task OnReady()
         {
             await Ready?.Invoke();
@@ -53,6 +55,11 @@ namespace FrankieBot.Discord.Services
         private async Task OnMessageReceived(SocketMessage sourceMessage)
         {
             await MessageReceived?.Invoke(sourceMessage);
+        }
+
+        private async Task OnLog(LogMessage message)
+        {
+            await Log?.Invoke(message);
         }
     }
 }

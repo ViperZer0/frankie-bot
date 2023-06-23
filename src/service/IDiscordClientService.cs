@@ -50,5 +50,10 @@ namespace FrankieBot.Discord.Services
         /// from DiscordSocketClient.
         /// </remarks>
         event Func<SocketMessage, Task> MessageReceived;
+
+        /// <summary>
+        /// Fires when a log message is generated.
+        /// </summary>
+        event Func<LogMessage, Task> Log;
     }
 }

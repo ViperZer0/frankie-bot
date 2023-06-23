@@ -41,6 +41,11 @@ namespace FrankieBot.Discord
 					await CurrencyModule.Initialize(services);
 				};
 
+                client.Log += async (LogMessage msg) =>
+                {
+                    Console.WriteLine(msg.ToString());
+                };
+
 				await client.Login();
 
 				await client.StartAsync();
