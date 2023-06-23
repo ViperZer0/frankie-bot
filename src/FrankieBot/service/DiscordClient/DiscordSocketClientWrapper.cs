@@ -9,15 +9,23 @@ namespace FrankieBot.Discord.Services.DiscordClient
     ///A wrapper around a DiscordSocketClient
     ///so it inherits a testable interface that we use.
     ///</summary>
+    ///<inheritdoc cref="IDiscordClientService"/>
     public class DiscordSocketClientWrapper : IDiscordClientService
     {
         private DiscordSocketClient _client;
 
+        ///<summary>
+        ///Gets the inner DiscordSocketClient that this class wraps
+        ///</summary>
         public DiscordSocketClient Client 
         {
             get => _client;
         }
 
+        ///<summary>
+        ///Creates a new instance of the <see cref="DiscordSocketClientWrapper"/> class
+        ///</summary>
+        ///<param name="config">Takes a <see cref="DiscordSocketConfig"/> configuration</param>
         public DiscordSocketClientWrapper(DiscordSocketConfig config)
         {
             _client = new DiscordSocketClient(config);
@@ -27,7 +35,7 @@ namespace FrankieBot.Discord.Services.DiscordClient
 
         }
 
-        public SocketSelfUser CurrentUser => _client.CurrentUser;
+        public ISelfUser CurrentUser => _client.CurrentUser;
 
         public async Task Login() {
             await OnLog(new LogMessage(LogSeverity.Debug, "Login()", $"Discord Token: {Environment.GetEnvironmentVariable("FRANKIE_TOKEN")}"));
@@ -39,14 +47,14 @@ namespace FrankieBot.Discord.Services.DiscordClient
             await _client.StartAsync();
         }
 
-        public SocketGuild GetGuild(ulong guildID)
+        public IGuild GetGuild(ulong guildID)
         {
             return _client.GetGuild(guildID);
         }
 
         public event Func<Task> Ready;
 
-        public event Func<SocketMessage, Task> MessageReceived;
+        public event Func<IMessage, Task> MessageReceived;
 
         public event Func<LogMessage, Task> Log;
 

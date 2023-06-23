@@ -7,10 +7,18 @@ using Discord.Commands;
 
 namespace FrankieBot.Discord.Services.CommandService
 {
+    ///<summary>
+    ///Wrapper around a CommandService instance that implements
+    ///IDiscordCommandService
+    ///</summary>
+    ///<inheritdoc cref="IDiscordCommandService"/>
     public class CommandServiceWrapper : IDiscordCommandService
     {
         private CommandService _commandService;
 
+        ///<summary>
+        ///Creates a new instance of the <see cref="CommandServiceWrapper"/> class.
+        ///<summary/>
         public CommandServiceWrapper()
         {
             _commandService = new CommandService();

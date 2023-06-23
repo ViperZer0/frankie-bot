@@ -15,15 +15,14 @@ namespace FrankieBot.Discord.Services.DiscordClient
         /// Get the current user. I believe this is represents
         /// the bot itself?
         /// </summary>
-        SocketSelfUser CurrentUser { get; }
+        /// <returns>
+        /// The current user
+        /// </returns>
+        ISelfUser CurrentUser { get; }
 
         /// <summary>
         /// Authenticate/connect the bot.
         /// </summary>
-        /// <remarks>
-        /// Not sure if we need to pass the token type 
-        /// or that can just be a default
-        /// </remarks>
         Task Login();
 
         /// <summary>
@@ -35,7 +34,15 @@ namespace FrankieBot.Discord.Services.DiscordClient
         /// </remarks>
         Task StartAsync();
 
-        SocketGuild GetGuild(ulong guildID);
+        ///<summary>
+        ///Gets the guild that corresponds to a certain guildID
+        ///</summary>
+        ///<param name="guildID"></param>
+        ///<returns>
+        ///The guild (server) in the form of an IGuild.
+        ///</returns>
+        IGuild GetGuild(ulong guildID);
+
         /// <summary>
         /// Fires when guild data has finished downloading.
         /// </summary>
@@ -49,7 +56,7 @@ namespace FrankieBot.Discord.Services.DiscordClient
         /// but right now I am verbatim just copying anything that is used
         /// from DiscordSocketClient.
         /// </remarks>
-        event Func<SocketMessage, Task> MessageReceived;
+        event Func<IMessage, Task> MessageReceived;
 
         /// <summary>
         /// Fires when a log message is generated.

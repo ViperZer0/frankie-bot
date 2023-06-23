@@ -2,10 +2,18 @@ using System;
 using Discord.Commands;
 using Discord;
 
-namespace FrankieBot.Discord.Services
+namespace FrankieBot.Discord.Services.CommandContextFactory
 {
+    ///<summary>
+    ///This version of the factory is for live/production environment.
+    ///Expects a DiscordSocketClientWrapper and creates a CommandContext
+    ///</summary>
+    ///<inheritdoc cref="ICommandContextFactory"/>
     public class SocketCommandContextFactory : ICommandContextFactory
     {
+        ///<exception cref="System.InvalidOperationException">
+        ///Thrown when client is not a DiscordSocketClientWrapper
+        ///</exception>
         public ICommandContext CreateContext(IDiscordClientService client, IUserMessage message)
         {
             if(client is DiscordSocketClientWrapper socketClient)

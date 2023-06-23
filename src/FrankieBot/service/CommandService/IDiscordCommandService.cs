@@ -16,11 +16,22 @@ namespace FrankieBot.Discord.Services.CommandService
         /// <summary>
         /// Add command modules from an assembly.
         /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="services"></param>
+        /// <returns>
+        /// A list of ModuleInfos that represents each command module
+        /// </returns>
         Task<IEnumerable<ModuleInfo>> AddModulesAsync(Assembly assembly, IServiceProvider services);
 
         /// <summary>
         /// Executes the command.
         /// </summary>
+        /// <param name="context"></param>
+        /// <param name="argPos"></param>
+        /// <param name="services"></param>
+        /// <returns>
+        /// An IResult that indicates whether a command was successful or not.
+        /// </returns>
         Task<IResult> ExecuteAsync(ICommandContext context, int argPos, IServiceProvider services);
 
         /// <summary>
