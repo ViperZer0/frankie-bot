@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 
-namespace FrankieBot.Discord.Services.CommandService
+namespace FrankieBot.Discord.Services.CommandServiceNS
 {
     /// <summary>
     /// Interface that defines the service that deals with commands.

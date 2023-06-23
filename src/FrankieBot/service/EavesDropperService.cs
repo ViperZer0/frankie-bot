@@ -8,6 +8,8 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 
+using FrankieBot.Discord.Services.DiscordClient;
+
 namespace FrankieBot.Discord.Services
 {
 	/// <summary>
@@ -41,9 +43,9 @@ namespace FrankieBot.Discord.Services
 			await Task.CompletedTask;
 		}
 
-		private async Task OnMessageReceived(SocketMessage sourceMessage)
+		private async Task OnMessageReceived(IMessage sourceMessage)
 		{
-			if (!(sourceMessage is SocketUserMessage message))
+			if (!(sourceMessage is IUserMessage message))
 			{
 				return;
 			}

@@ -16,6 +16,7 @@ using SQLite;
 using FrankieBot.DB;
 using FrankieBot.DB.ViewModel;
 using FrankieBot.DB.Container;
+using FrankieBot.Discord.Services.DiscordClient;
 
 using Model = FrankieBot.DB.Model;
 
@@ -51,7 +52,7 @@ namespace FrankieBot.Discord.Services
 			foreach (var file in dbFiles)
 			{
 				var guildID = ulong.Parse(Path.GetFileNameWithoutExtension(file));
-				SocketGuild guild = _client.GetGuild(guildID);
+				IGuild guild = _client.GetGuild(guildID);
 				if (guild == null)
 				{
 					continue;

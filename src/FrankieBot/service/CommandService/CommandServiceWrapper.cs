@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Discord;
 using Discord.Commands;
 
-namespace FrankieBot.Discord.Services.CommandService
+namespace FrankieBot.Discord.Services.CommandServiceNS
 {
     ///<summary>
     ///Wrapper around a CommandService instance that implements

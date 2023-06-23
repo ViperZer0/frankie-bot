@@ -1,6 +1,7 @@
 using System;
 using Discord.Commands;
 using Discord;
+using FrankieBot.Discord.Services.DiscordClient;
 
 namespace FrankieBot.Discord.Services.CommandContextFactory
 {

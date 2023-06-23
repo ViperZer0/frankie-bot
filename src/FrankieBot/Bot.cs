@@ -8,6 +8,9 @@ using Discord.Commands;
 using Discord.WebSocket;
 using FrankieBot.Discord.Modules;
 using FrankieBot.Discord.Services;
+using FrankieBot.Discord.Services.DiscordClient;
+using FrankieBot.Discord.Services.CommandServiceNS;
+using FrankieBot.Discord.Services.CommandContextFactory;
 
 namespace FrankieBot.Discord
 {

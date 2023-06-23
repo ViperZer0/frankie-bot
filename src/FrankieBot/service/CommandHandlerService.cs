@@ -15,6 +15,10 @@ using FrankieBot.DB;
 using FrankieBot.DB.ViewModel;
 using FrankieBot.DB.Container;
 
+using FrankieBot.Discord.Services.CommandServiceNS;
+using FrankieBot.Discord.Services.DiscordClient;
+using FrankieBot.Discord.Services.CommandContextFactory;
+
 namespace FrankieBot.Discord.Services
 {
 	/// <summary>
@@ -79,9 +83,9 @@ namespace FrankieBot.Discord.Services
 		/// Event Handler method called when receiving messages
 		/// </summary>
 		/// <param name="sourceMessage"></param>
-		private async Task OnMessageReceived(SocketMessage sourceMessage)
+		private async Task OnMessageReceived(IMessage sourceMessage)
 		{
-			if (!(sourceMessage is SocketUserMessage message))
+			if (!(sourceMessage is IUserMessage message))
 			{
 				return;
 			}
