@@ -12,13 +12,19 @@ namespace FrankieBot.Discord.Services
     public interface IDiscordClientService
     {
         /// <summary>
+        /// Get the current user. I believe this is represents
+        /// the bot itself?
+        /// </summary>
+        SocketSelfUser CurrentUser { get; }
+
+        /// <summary>
         /// Authenticate/connect the bot.
         /// </summary>
         /// <remarks>
         /// Not sure if we need to pass the token type 
         /// or that can just be a default
         /// </remarks>
-        Task LoginAsync(TokenType tokenType, string token);
+        Task Login();
 
         /// <summary>
         /// Starts the bot once it's been connected.
@@ -42,6 +48,6 @@ namespace FrankieBot.Discord.Services
         /// but right now I am verbatim just copying anything that is used
         /// from DiscordSocketClient.
         /// </remarks>
-        event Func<SocketMessage, Task> MessageRecieved;
+        event Func<SocketMessage, Task> MessageReceived;
     }
 }

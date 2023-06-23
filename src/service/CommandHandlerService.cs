@@ -44,8 +44,9 @@ namespace FrankieBot.Discord.Services
 			"_"
 		};
 
-		private readonly DiscordSocketClient _client;
-		private readonly CommandService _commands;
+		private readonly IDiscordClientService _client;
+		private readonly IDiscordCommandService _commands;
+        private readonly ICommandContextFactory _commandContextFactory;
 		private readonly IServiceProvider _services;
 		private readonly DataBaseService _db;
 
@@ -55,8 +56,9 @@ namespace FrankieBot.Discord.Services
 		/// <param name="services"></param>
 		public CommandHandlerService(IServiceProvider services)
 		{
-			_commands = services.GetRequiredService<CommandService>();
-			_client = services.GetRequiredService<DiscordSocketClient>();
+			_commands = services.GetRequiredService<IDiscordCommandService>();
+			_client = services.GetRequiredService<IDiscordClientService>();
+            _commandContextFactory = services.GetRequiredService<ICommandContextFactory>();
 			_db = services.GetRequiredService<DataBaseService>();
 			_services = services;
 
@@ -100,7 +102,7 @@ namespace FrankieBot.Discord.Services
 				return;
 			}
 
-			var context = new SocketCommandContext(_client, message);
+			var context = _commandContextFactory.CreateContext(_client, message);
 
 			if (!message.HasMentionPrefix(_client.CurrentUser, ref argPos))
 			{

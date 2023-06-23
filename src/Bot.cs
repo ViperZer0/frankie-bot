@@ -32,7 +32,7 @@ namespace FrankieBot.Discord
 		{
 			using (var services = ConfigureServices())
 			{
-				var client = services.GetRequiredService<DiscordSocketClient>();
+				var client = services.GetRequiredService<IDiscordClientService>();
 
 				client.Ready += async () =>
 				{
@@ -41,7 +41,7 @@ namespace FrankieBot.Discord
 					await CurrencyModule.Initialize(services);
 				};
 
-				await client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("FRANKIE_TOKEN"));
+				await client.Login();
 
 				await client.StartAsync();
 
@@ -75,7 +75,8 @@ namespace FrankieBot.Discord
 				AlwaysDownloadUsers = true
 				};
 
-			var client = new DiscordSocketClient(config);
+            // Wrapper so that this class implements IDiscordClientService.
+			var client = new DiscordSocketClientWrapper(config);
 
 			return new ServiceCollection()
 				//.AddSingleton<DiscordSocketClient>()
@@ -85,6 +86,7 @@ namespace FrankieBot.Discord
 				.AddSingleton<CommandHandlerService>()
 				.AddSingleton<DataBaseService>()
 				.AddSingleton<SchedulerService>()
+                .AddSingleton<SocketCommandContextFactory>()
 				.BuildServiceProvider();
 		}
 	}
