@@ -28,7 +28,7 @@ namespace FrankieBot.Discord.Services
 	{
 		private readonly IServiceProvider _services;
 
-		private readonly DiscordSocketClient _client;
+		private readonly IDiscordClientService _client;
 
 		/// <summary>
 		/// Constructs a new DatabaseService
@@ -37,7 +37,7 @@ namespace FrankieBot.Discord.Services
 		public DataBaseService(IServiceProvider services)
 		{
 			_services = services;
-			_client = _services.GetRequiredService<DiscordSocketClient>();
+			_client = _services.GetRequiredService<IDiscordClientService>();
 		}
 
 		/// <summary>

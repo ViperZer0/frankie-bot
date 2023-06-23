@@ -35,6 +35,7 @@ namespace FrankieBot.Discord.Services
         /// </remarks>
         Task StartAsync();
 
+        SocketGuild GetGuild(ulong guildID);
         /// <summary>
         /// Fires when guild data has finished downloading.
         /// </summary>

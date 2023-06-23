@@ -15,7 +15,7 @@ namespace FrankieBot.Discord.Services
 	/// </summary>
 	public class EavesDropperService
 	{
-		private readonly DiscordSocketClient _client;
+		private readonly IDiscordClientService _client;
 		private readonly IServiceProvider _services;
 		
 		/// <summary>
@@ -24,7 +24,7 @@ namespace FrankieBot.Discord.Services
 		/// <param name="services"></param>
 		public EavesDropperService(IServiceProvider services)
 		{
-			_client = services.GetRequiredService<DiscordSocketClient>();
+			_client = services.GetRequiredService<IDiscordClientService>();
 			_services = services;
 
 			_client.MessageReceived += OnMessageReceived;

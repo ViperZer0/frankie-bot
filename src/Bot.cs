@@ -80,13 +80,13 @@ namespace FrankieBot.Discord
 
 			return new ServiceCollection()
 				//.AddSingleton<DiscordSocketClient>()
-				.AddSingleton(client)
+				.AddSingleton<IDiscordClientService>(client)
 				.AddSingleton<EavesDropperService>()
-				.AddSingleton<CommandService>()
+				.AddSingleton<IDiscordCommandService>(new CommandServiceWrapper())
 				.AddSingleton<CommandHandlerService>()
 				.AddSingleton<DataBaseService>()
 				.AddSingleton<SchedulerService>()
-                .AddSingleton<SocketCommandContextFactory>()
+                .AddSingleton<ICommandContextFactory>(new SocketCommandContextFactory())
 				.BuildServiceProvider();
 		}
 	}

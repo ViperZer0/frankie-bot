@@ -36,6 +36,11 @@ namespace FrankieBot.Discord.Services
             await _client.StartAsync();
         }
 
+        public SocketGuild GetGuild(ulong guildID)
+        {
+            return _client.GetGuild(guildID);
+        }
+
         public event Func<Task> Ready;
 
         public event Func<SocketMessage, Task> MessageReceived;
