@@ -1,6 +1,5 @@
 using System;
-using System.IO;
-using System.Threading.Tasks;
+using System.IO; using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 using Discord;
@@ -24,7 +23,6 @@ namespace FrankieBot.Discord
 		/// </summary>
 		public Bot()
 		{
-
 		}
 
 		/// <summary>
@@ -60,6 +58,41 @@ namespace FrankieBot.Discord
 				await Task.Delay(-1);
 			}
 		}
+
+        /// <summary>
+        /// Runs the bot using a custom service provider 
+        /// (i.e for running in a testing environment
+        /// </summary>
+        /// <param name="services">
+        /// ServiceProvider to use.
+        /// Note that caller is responsible for disposing of the provider
+        /// </param>
+        public async Task Run(ServiceProvider services)
+        {
+            var client = services.GetRequiredService<IDiscordClientService>();
+
+            client.Ready += async () =>
+            {
+                await ProgressReportModule.Initialize(services);
+                await WordTrackerModule.Initialize(services);
+                await CurrencyModule.Initialize(services);
+            };
+
+            client.Log += async (LogMessage msg) =>
+            {
+                Console.WriteLine(msg.ToString());
+            };
+
+            await client.Login();
+
+            await client.StartAsync();
+
+            await services.GetRequiredService<CommandHandlerService>().InitializeAsync();
+            await services.GetRequiredService<EavesDropperService>().InitializeAsync();
+
+            // Block task until program close
+            await Task.Delay(-1);
+        }
 
 		private async Task OnBotJoinedServer(SocketGuild server)
 		{
