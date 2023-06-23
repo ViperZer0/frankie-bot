@@ -1,3 +1,4 @@
+using FrankieBot.Discord.Services.DiscordClient;
 using Discord.Commands;
 using Discord;
 

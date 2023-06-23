@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Discord;
 using Discord.Commands;
 
-namespace FrankieBot.Discord.Services
+namespace FrankieBot.Discord.Services.CommandService
 {
     public class CommandServiceWrapper : IDiscordCommandService
     {

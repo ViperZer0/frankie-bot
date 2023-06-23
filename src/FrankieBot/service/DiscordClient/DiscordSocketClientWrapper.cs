@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace FrankieBot.Discord.Services
+namespace FrankieBot.Discord.Services.DiscordClient
 {
     ///<summary>
     ///A wrapper around a DiscordSocketClient
