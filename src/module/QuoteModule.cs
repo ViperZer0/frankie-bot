@@ -20,7 +20,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("quote")]
 	[Alias("q")]
-	public class QuoteModule : ModuleBase<SocketCommandContext>
+	public class QuoteModule : ModuleBase<ICommandContext>
 	{
 		/// <summary>
 		/// DatabaseService reference
@@ -179,7 +179,7 @@ namespace FrankieBot.Discord.Modules
 
 		#endregion // Commands
 
-		private async Task<ViewModel.Quote> GetQuote(SocketCommandContext context, int id)
+		private async Task<ViewModel.Quote> GetQuote(ICommandContext context, int id)
 		{
 			ViewModel.Quote res = null;
 
@@ -203,7 +203,7 @@ namespace FrankieBot.Discord.Modules
 			return res;
 		}
 
-		private async Task PostQuote(SocketCommandContext context, ViewModel.Quote quote)
+		private async Task PostQuote(ICommandContext context, ViewModel.Quote quote)
 		{
 			var eb = new EmbedBuilder()
 				.WithAuthor(quote.Author)
@@ -214,7 +214,7 @@ namespace FrankieBot.Discord.Modules
 			await context.Channel.SendMessageAsync(embed: eb.Build());
 		}
 
-		private async Task PostQuote(SocketCommandContext context, int quoteID)
+		private async Task PostQuote(ICommandContext context, int quoteID)
 		{
 			ViewModel.Quote quote = null;
 			try
@@ -228,7 +228,7 @@ namespace FrankieBot.Discord.Modules
 			}
 		}
 
-		private async Task PostQuoteList(SocketCommandContext context, List<ViewModel.Quote> quotes)
+		private async Task PostQuoteList(ICommandContext context, List<ViewModel.Quote> quotes)
 		{
 			var fields = new List<EmbedFieldBuilder>();
 			foreach (var quote in quotes)
@@ -247,7 +247,7 @@ namespace FrankieBot.Discord.Modules
 			await context.Channel.SendMessageAsync(text: $"Quotes by {quotes[0].Author.Username}", embed: eb.Build());
 		}
 
-		private async Task ListQuotes(SocketCommandContext context, IUser user)
+		private async Task ListQuotes(ICommandContext context, IUser user)
 		{
 			//Convenience Alias
 			var db = DataBaseService;
@@ -272,7 +272,7 @@ namespace FrankieBot.Discord.Modules
 			}
 		}
 
-		private async Task AddQuote(SocketCommandContext context, IUser user, string message, IUser recorder)
+		private async Task AddQuote(ICommandContext context, IUser user, string message, IUser recorder)
 		{
 			// Convenience Alias
 			var db = DataBaseService;

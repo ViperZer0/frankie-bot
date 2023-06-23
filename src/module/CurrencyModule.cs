@@ -26,7 +26,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("currency")]
 	[Alias("c")]
-	public class CurrencyModule : ModuleBase<SocketCommandContext>
+	public class CurrencyModule : ModuleBase<ICommandContext>
 	{
 		#region Options
 		/// <summary>

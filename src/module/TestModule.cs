@@ -13,7 +13,7 @@ namespace FrankieBot.Discord.Modules
 	/// <summary>
 	/// Command Module containing test commands
 	/// </summary>
-	public class TestModule : ModuleBase<SocketCommandContext>
+	public class TestModule : ModuleBase<ICommandContext>
 	{
 		/// <summary>
 		/// Reference to SchedulerService

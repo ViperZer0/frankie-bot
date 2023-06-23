@@ -27,7 +27,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("wordtracker")]
 	[Alias("wt")]
-	public class WordTrackerModule : ModuleBase<SocketCommandContext>
+	public class WordTrackerModule : ModuleBase<ICommandContext>
 	{
 		#region Options
 
@@ -473,7 +473,7 @@ namespace FrankieBot.Discord.Modules
 				var channelOption = Option.FindOne(connection, o => o.Name == OptionReportChannel).As<Option>();
 				if (!channelOption.IsEmpty)
 				{
-					var channel = Context.Guild.GetChannel(ulong.Parse(channelOption.Value));
+					var channel = await Context.Guild.GetChannelAsync(ulong.Parse(channelOption.Value));
 					if (channel != null && Context.Channel != channel)
 					{
 						await Context.Channel.SendMessageAsync($"Word tracker updates must be posted in <#{channel.Id}>.");
@@ -513,7 +513,7 @@ namespace FrankieBot.Discord.Modules
 				var channelOption = Option.FindOne(connection, o => o.Name == OptionReportChannel).As<Option>();
 				if (!channelOption.IsEmpty)
 				{
-					var channel = Context.Guild.GetChannel(ulong.Parse(channelOption.Value));
+					var channel = await Context.Guild.GetChannelAsync(ulong.Parse(channelOption.Value));
 					if (channel != null && Context.Channel != channel)
 					{
 						await Context.Channel.SendMessageAsync($"Word tracker updates must be posted in <#{channel.Id}>.");
@@ -563,7 +563,7 @@ namespace FrankieBot.Discord.Modules
 				var channelOption = Option.FindOne(connection, o => o.Name == OptionReportChannel).As<Option>();
 				if (!channelOption.IsEmpty)
 				{
-					var channel = Context.Guild.GetChannel(ulong.Parse(channelOption.Value));
+					var channel = await Context.Guild.GetChannelAsync(ulong.Parse(channelOption.Value));
 					if (channel != null && Context.Channel != channel)
 					{
 						await Context.Channel.SendMessageAsync($"Word tracker updates must be posted in <#{channel.Id}>.");
@@ -610,7 +610,7 @@ namespace FrankieBot.Discord.Modules
 				var channelOption = Option.FindOne(connection, o => o.Name == OptionReportChannel).As<Option>();
 				if (!channelOption.IsEmpty)
 				{
-					var channel = Context.Guild.GetChannel(ulong.Parse(channelOption.Value));
+					var channel = await Context.Guild.GetChannelAsync(ulong.Parse(channelOption.Value));
 					if (channel != null && Context.Channel != channel)
 					{
 						await Context.Channel.SendMessageAsync($"Word tracker updates must be posted in <#{channel.Id}>.");

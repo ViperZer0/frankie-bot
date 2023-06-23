@@ -96,7 +96,7 @@ namespace FrankieBot.Discord.Services
 		/// <param name="cron"></param>
 		/// <param name="autoStart"></param>
 		/// <returns></returns>
-		public async Task<CronJob> AddJob(SocketCommandContext context, string name, string cron, bool autoStart = true)
+		public async Task<CronJob> AddJob(ICommandContext context, string name, string cron, bool autoStart = true)
 		{
 			CronJob res = null;
 			await _db.RunGuildDBAction(context.Guild, connection =>

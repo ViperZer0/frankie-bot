@@ -29,7 +29,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("progress")]
 	[Alias("p", "pr")]
-	public class ProgressReportModule : ModuleBase<SocketCommandContext>
+	public class ProgressReportModule : ModuleBase<ICommandContext>
 	{
 		#region Options
 
@@ -239,7 +239,6 @@ namespace FrankieBot.Discord.Modules
 
 		private static async Task OpenWindow(IGuild guild, DataBaseService dataBaseService, SchedulerService schedulerService, int duration = -1)
 		{
-			var g = guild as SocketGuild;
 			// convenience alias
 			var db = dataBaseService;
 
@@ -251,7 +250,7 @@ namespace FrankieBot.Discord.Modules
 				ISocketMessageChannel announceChannel = null;
 				if (announce)
 				{
-					announceChannel = g.GetChannel(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
+					announceChannel = await guild.GetChannelAsync(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
 					if (announceChannel == null)
 					{
 						// todo: log that the specified channel is not found
@@ -286,21 +285,21 @@ namespace FrankieBot.Discord.Modules
 
 				// Create Job
 
-				var closeJob = schedulerService.GetJob(g, JobAnnounceWindowClosed);
+				var closeJob = schedulerService.GetJob(guild, JobAnnounceWindowClosed);
 				if (closeJob != null)
 				{
 					closeJob.Stop();
-					schedulerService.RemoveJob(g, closeJob.Name);
+					schedulerService.RemoveJob(guild, closeJob.Name);
 				}
 
-				var guildId = g.Id.ToString();
+				var guildId = guild.Id.ToString();
 				var closeJobRecord = CronJob.FindOne(connection, j => j.Name == JobAnnounceWindowClosed && j.GuildID == guildId).As<CronJob>();
 				if (closeJobRecord.IsEmpty)
 				{
 					closeJobRecord = new CronJob(connection)
 					{
 						Name = JobAnnounceWindowClosed,
-						Guild = g
+						Guild = guild
 					};
 				}
 				// We don't need to save this job to the DB as it is not a recurring job
@@ -308,7 +307,7 @@ namespace FrankieBot.Discord.Modules
 				closeJobRecord.Run += async (object sender, EventArgs e) =>
 				{
 					closeJobRecord.Stop();
-					await CloseWindow(g, window, schedulerService, dataBaseService);
+					await CloseWindow(guild, window, schedulerService, dataBaseService);
 				};
 
 				// We keep the awaitables at the bottom of this process as they tend to
@@ -344,8 +343,7 @@ namespace FrankieBot.Discord.Modules
 				var announcementChannelOption = Option.FindOne(connection, o => o.Name == OptionAnnouncementChannel).As<Option>();
 				if (!announcementChannelOption.IsEmpty)
 				{
-					var g = guild as SocketGuild;
-					channel = g.GetChannel(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
+					channel = guild.GetChannelAsync(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
 				}
 
 				var rankOption = Option.FindOne(connection, o => o.Name == OptionRanksEnabled).As<Option>();
@@ -460,8 +458,7 @@ namespace FrankieBot.Discord.Modules
 				var announcementChannelOption = Option.FindOne(connection, o => o.Name == OptionAnnouncementChannel).As<Option>();
 				if (!announcementChannelOption.IsEmpty)
 				{
-					var g = guild as SocketGuild;
-					announceChannel = g.GetChannel(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
+					announceChannel = guild.GetChannelAsync(ulong.Parse(announcementChannelOption.Value)) as ISocketMessageChannel;
 				}
 			});
 
@@ -760,7 +757,7 @@ namespace FrankieBot.Discord.Modules
 			}
 		}
 
-		private async Task ListWindowReports(SocketCommandContext context, ProgressReportWindow window)
+		private async Task ListWindowReports(ICommandContext context, ProgressReportWindow window)
 		{
 			// todo: build report list embed
 			var submissions = new List<ProgressReport>();
@@ -1030,7 +1027,7 @@ namespace FrankieBot.Discord.Modules
 		[Group("option")]
 		[Alias("set", "o")]
 		[RequireUserPermission(GuildPermission.Administrator)]
-		public class ModuleOptions : ModuleBase<SocketCommandContext>
+		public class ModuleOptions : ModuleBase<ICommandContext>
 		{
 			/// <summary>
 			/// DataBaseService reference
@@ -1311,7 +1308,7 @@ namespace FrankieBot.Discord.Modules
 		/// </summary>
 		[Group("rank")]
 		[RequireUserPermission(GuildPermission.Administrator)]
-		public class RankOptions : ModuleBase<SocketCommandContext>
+		public class RankOptions : ModuleBase<ICommandContext>
 		{
 			/// <summary>
 			/// DataBaseService reference
@@ -1502,7 +1499,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("report")]
 	[Alias("r", "rp")]
-	public class ReportModule : ModuleBase<SocketCommandContext>
+	public class ReportModule : ModuleBase<ICommandContext>
 	{
 		/// <summary>
 		/// DataBaseService reference

@@ -22,12 +22,15 @@ namespace FrankieBot.Discord.Services
         {
             _client = new DiscordSocketClient(config);
             _client.Ready += OnReady;
+            _client.MessageReceived += OnMessageReceived;
+            _client.Log += OnLog;
 
         }
 
         public SocketSelfUser CurrentUser => _client.CurrentUser;
 
         public async Task Login() {
+            await OnLog(new LogMessage(LogSeverity.Debug, "Login()", $"Discord Token: {Environment.GetEnvironmentVariable("FRANKIE_TOKEN")}"));
             await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("FRANKIE_TOKEN"));
         }
 
@@ -54,6 +57,7 @@ namespace FrankieBot.Discord.Services
 
         private async Task OnMessageReceived(SocketMessage sourceMessage)
         {
+            await OnLog(new LogMessage(LogSeverity.Debug, "OnMessageReceived:", $"Message: {sourceMessage.ToString()}"));
             await MessageReceived?.Invoke(sourceMessage);
         }
 

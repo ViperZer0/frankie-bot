@@ -21,7 +21,7 @@ namespace FrankieBot.Discord.Modules
 	/// </summary>
 	[Group("admin")]
 	[RequireUserPermission(GuildPermission.Administrator)]
-	public class AdminModule : ModuleBase<SocketCommandContext>
+	public class AdminModule : ModuleBase<ICommandContext>
 	{
 		/// <summary>
 		/// Provides database services
