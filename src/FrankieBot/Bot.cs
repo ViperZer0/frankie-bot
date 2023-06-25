@@ -33,29 +33,7 @@ namespace FrankieBot.Discord
 		{
 			using (var services = ConfigureServices())
 			{
-				var client = services.GetRequiredService<IDiscordClientService>();
-
-				client.Ready += async () =>
-				{
-					await ProgressReportModule.Initialize(services);
-					await WordTrackerModule.Initialize(services);
-					await CurrencyModule.Initialize(services);
-				};
-
-                client.Log += async (LogMessage msg) =>
-                {
-                    Console.WriteLine(msg.ToString());
-                };
-
-				await client.Login();
-
-				await client.StartAsync();
-
-				await services.GetRequiredService<CommandHandlerService>().InitializeAsync();
-				await services.GetRequiredService<EavesDropperService>().InitializeAsync();
-
-				// Block task until program close
-				await Task.Delay(-1);
+                await Run(services);
 			}
 		}
 
